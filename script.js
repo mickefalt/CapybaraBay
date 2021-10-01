@@ -52,10 +52,12 @@ async function searchImage(query, pagenr, color) {
         images.appendChild(user);
 
         // Find last page and hide next button
-        if (pagenr < maxPage) {
-            next.style.visibility = "visible"
-        }
         maxPage = Math.ceil(result.totalHits / 10);
+        if (pagenr < maxPage) {
+            next.style.visibility = "visible";
+        } else if (maxPage < 2) {
+            next.style.visibility = "hidden";
+        }
     });
 }
 
