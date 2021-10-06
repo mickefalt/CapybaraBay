@@ -13,17 +13,21 @@
 <body>
     <h1>CapybaraBay</h1>
     <nav class="search">
-        <input type="text" id="input"></input>
-        <select id="list" onchange="getSelectValue();">
-            <option value="any">Any color</option>
-            <option value="blue">Blue</option>
-            <option value="green">Green</option>
-            <option value="yellow">Yellow</option>
-            <option value="red">Red</option>
-            <option value="orange">Orange</option>
-            <option value="pink">Pink</option>  
-        </select>
-        <div class="searchbutton">Search</div>
+        <form id="form">
+            <input type="text" id="input" placeholder="Search"></input>
+
+            <select id="list" onchange="getSelectValue();">
+                <option value="any">Any color</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="yellow">Yellow</option>
+                <option value="red">Red</option>
+                <option value="orange">Orange</option>
+                <option value="pink">Pink</option>  
+                <option value="brown">Brown</option>  
+            </select>
+            <button type="submit" value="Search" class="searchbutton">Search</button>
+        </form>
     </nav>
     <section class="gallery"></section>
     <button class="next">Next <br> Page</button>
