@@ -2,10 +2,11 @@ const auth = "23508945-d253b032e43e7508a11e2da8c";
 const next = document.querySelector(".next");
 const previous = document.querySelector(".previous")
 const input = document.querySelector("input");
-const searchbutton = document.querySelector(".searchbutton")
 const selectcolor = document.querySelector(".colors")
 const gallery = document.querySelector(".gallery");
 
+let previousQuery = "";
+let previousColor = "";
 let pagenr = 1;
 let query = "";
 let color = "";
@@ -36,6 +37,9 @@ async function searchImage(query, pagenr, color) {
 
     );
     const result = await data.json();
+    if (result.totalHits == 0) {
+        next.style.visibility = "hidden";
+    }
     result.hits.forEach((hit) => {
 
         const images = document.createElement("div")
@@ -61,8 +65,12 @@ async function searchImage(query, pagenr, color) {
     });
 }
 
-// Search by clicking search button
-searchbutton.addEventListener("click", (event) => {
+var form = document.getElementById('form')
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    previousQuery = query;
+    previousColor = color;
     if (input.value === "") return;
     pagenr = 1;
     previous.style.visibility = "hidden";
@@ -72,24 +80,10 @@ searchbutton.addEventListener("click", (event) => {
     }
 });
 
-// Search by pressing enter key
-input.addEventListener('keyup', function(evt) {
-    if (evt.key === 'Enter') {
-        if (input.value === "") return;
-
-        previous.style.visibility = "hidden";
-        pagenr = 1;
-        searchImage(query, pagenr, color);
-        if (query.toLowerCase() !== "capybara") {
-            alert("Are you sure you don't want to search for capybara?")
-        }
-    }
-});
-
 // Next page
 next.addEventListener("click", () => {
     pagenr++;
-    searchImage(query, pagenr, color)
+    searchImage(previousQuery, pagenr, previousColor)
     previous.style.visibility = "visible";
     if (pagenr >= maxPage) {
         next.style.visibility = "hidden";
@@ -103,5 +97,5 @@ previous.addEventListener("click", () => {
         previous.style.visibility = "hidden";
     }
     pagenr--;
-    searchImage(query, pagenr, color)
+    searchImage(previousQuery, pagenr, previousColor)
 });
